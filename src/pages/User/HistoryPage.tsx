@@ -1,0 +1,84 @@
+import React from 'react';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+
+
+const HistoryPage: React.FC = () => {
+  // Example data for the essays
+  const essays = [
+    {
+      title: 'The increase in the production of consumer goods results in damage to the natural environment...',
+      band: '5.5',
+      time: '42:44',
+      date: '11:00 - 26/3/2025',
+      status: 'Grading'
+    },
+    {
+      title: 'As well as making money, businesses also have social responsibilities...',
+      band: '6.5',
+      time: '45:17',
+      date: '07:23 - 25/3/2025',
+      status: 'Graded'
+    },
+    // Add more essays as needed
+    
+    {
+      title: 'As well as making money, businesses also have social responsibilities...',
+      band: '6.5',
+      time: '45:17',
+      date: '07:23 - 25/3/2025',
+      status: 'Graded'
+    },
+    
+    {
+      title: 'As well as making money, businesses also have social responsibilities...',
+      band: '6.5',
+      time: '45:17',
+      date: '07:23 - 25/3/2025',
+      status: 'Graded'
+    },
+  ];
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'row', height: '90vh', borderLeftStyle: 'solid', borderTopStyle: 'solid', borderWidth: '2px', padding: 5 }}>
+      {/* Sidebar & Header */}
+
+        {/* Main Content */}
+            {/* Table to display previous essays */}
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 800 }} aria-label="previous essays table">
+              <TableHead >
+                <TableRow>
+                  <TableCell sx={{ fontSize: '24px', fontWeight: 'bold' }}>Previous Essays</TableCell>
+                  <TableCell align="right" sx={{ fontSize: '24px', fontWeight: 'bold' }}>Band</TableCell>
+                  <TableCell align="right" sx={{ fontSize: '24px', fontWeight: 'bold' }}>Time</TableCell>
+                  <TableCell align="right" sx={{ fontSize: '24px', fontWeight: 'bold' }}>Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {essays.map((essay, index) => (
+                 <TableRow key={index} sx={{ backgroundColor: index % 2 === 0 ? '#f4f4f4' : '#ffffff' }}>
+                 <TableCell component="th" scope="row" sx={{ fontSize: '16px' }}>
+                   {essay.title}
+                 </TableCell>
+                 <TableCell align="right" sx={{ fontSize: '16px' }}>
+                   {essay.band}
+                 </TableCell>
+                 <TableCell align="right" sx={{ fontSize: '16px' }}>
+                   {essay.time}
+                 </TableCell>
+                 <TableCell align="right" sx={{ fontSize: '16px' }}>
+                   {essay.date}
+                 </TableCell>
+               </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+       
+      
+   
+    </Box>
+  );
+};
+
+export default HistoryPage;

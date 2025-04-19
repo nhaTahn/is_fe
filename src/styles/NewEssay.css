@@ -1,0 +1,17 @@
+/* Frame for Essay Input and Buttons */
+.frame {
+  padding: 1%;
+  width: 1360px;
+  position:sticky;
+  border-style: ridge;
+  border-radius: 5px;
+  height: 15vh 
+}
+
+/* Button for submitting essay */
+.button-submit-essay {
+  align-items: center;
+  justify-content: center;
+  position: static;
+  overflow: hidden;
+}

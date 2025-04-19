@@ -1,0 +1,96 @@
+html, body {
+  font-family: 'Inter', sans-serif;
+  height: 100%;
+  margin: 0; 
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    overflow: hidden;
+    height:100vh;
+}
+
+h2 {
+  font-size: 36px;
+  margin-bottom: 3rem;
+  font-weight: bold;
+}
+  
+.form {
+  margin-bottom: 10%;
+  background-color: white;
+  padding: 32px;
+  /* border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); */
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
+
+  .input-group {
+    margin-bottom: 16px;
+    width: 288px;/* Ensure full width of the input fields */
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 278px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .password-container {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  Button, .MuiButton-root {
+    display: block;
+    width: 300px; /* Make the button full width */
+    margin-top: 12px; /* Add some spacing */
+  }
+  .button:hover {
+    background-color: #3b6cd3;
+  }
+  
+
+  
+
+  .main-content {
+    flex-grow: 2;
+    padding: 5%;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+  }
+
+  
+  .submit-btn {
+    width: 100px;
+    margin-top: 16px;
+  }
+  
