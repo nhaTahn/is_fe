@@ -11,8 +11,8 @@ const EssayInput: React.FC<EssayInputProps> = ({ essay, onChange }) => {
     <TextField
       placeholder="Write your essay here..."
       multiline
-      minRows={20}
-      maxRows={30}
+      minRows={15}
+      maxRows={25}
       value={essay}
       onChange={onChange}
       variant="outlined"

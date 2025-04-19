@@ -8,6 +8,7 @@ import Sidebar from "./components/SideBar";
 import "./styles/App.css";
 import { Grid } from "@mui/material";
 import HistoryPage from "./pages/User/HistoryPage";
+import DraftsPage from "./pages/User/DraftPage";
 
 const App: React.FC = () => {
   const [userName, setUserName] = useState<string | null>(null);
@@ -35,6 +36,8 @@ const App: React.FC = () => {
             <Route path="/" element={<LoginPage />} />
             <Route path="/newEssay" element={<NewEssayPage />} />
             <Route path="/history" element={<HistoryPage />} />
+            <Route path="/drafts" element={<DraftsPage />} />
+            
           </Routes>
         </Grid>
       </Grid>
