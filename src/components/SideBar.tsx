@@ -28,13 +28,13 @@ const Sidebar: React.FC = () => {
     >
        <Button
         component={Link}
-        to="/newessay"
+        to="/newEssay"
         variant="text"
         sx={{
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
-          ...isActive("/newessay"), // Highlight if active
+          ...isActive("/newEssay"), // Highlight if active
         }}
       >
         New Essay
