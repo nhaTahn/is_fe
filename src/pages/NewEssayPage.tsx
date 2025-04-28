@@ -49,8 +49,8 @@ const EssayPage: React.FC = () => {
     setWordCount(essay.split(/\s+/).filter(Boolean).length);
   }, [essay]);
 
-  const handleEssayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEssay(e.target.value);
+  const handleEssayChange = (value: string) => {
+    setEssay(value);
   };
 
   const handleRefresh = () => {

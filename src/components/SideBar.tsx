@@ -67,6 +67,50 @@ const Sidebar: React.FC = () => {
       >
         History
       </Button>
+
+
+      <Button
+        component={Link}
+        to="/testmodel"
+        variant="text"
+        sx={{
+          marginBottom: "16px",
+          borderRadius: "5px",
+          padding: "10px",
+          ...isActive("/testmodel"), // Highlight if active
+        }}
+      >
+        Test Models
+      </Button>
+
+
+      <Button
+        component={Link}
+        to="/train"
+        variant="text"
+        sx={{
+          marginBottom: "16px",
+          borderRadius: "5px",
+          padding: "10px",
+          ...isActive("/train"), // Highlight if active
+        }}
+      >
+        Train
+      </Button>
+
+      <Button
+        component={Link}
+        to="/dashboard"
+        variant="text"
+        sx={{
+          marginBottom: "16px",
+          borderRadius: "5px",
+          padding: "10px",
+          ...isActive("/dashboard"), // Highlight if active
+        }}
+      >
+        Dashboard
+      </Button>
     </Box>
   );
 };

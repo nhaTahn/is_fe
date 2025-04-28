@@ -6,6 +6,7 @@ interface WordCountProps {
 }
 
 const WordCount: React.FC<WordCountProps> = ({ count }) => {
+  console.log(count)
   return (
     <Box sx={{ 
       width: "1350px",
@@ -14,9 +15,8 @@ const WordCount: React.FC<WordCountProps> = ({ count }) => {
       borderWidth: "1px",
       padding: "1%"
     }}>
-
-      <Typography >
-        {count} words
+      <Typography variant="body2" color="textSecondary">
+        {count} word{count > 1 && 's'}
       </Typography>
     </Box>
   );
