@@ -9,6 +9,9 @@ import "./styles/App.css";
 import { Grid } from "@mui/material";
 import HistoryPage from "./pages/User/HistoryPage";
 import DraftsPage from "./pages/User/DraftPage";
+import TestModel from "./pages/DataAnalysis/TestModel";
+import TrainPage from "./pages/DataAnalysis/TrainPage";
+import Dashboard from "./pages/DataAnalysis/Dashboard";
 
 const App: React.FC = () => {
   const [userName, setUserName] = useState<string | null>(null);
@@ -37,6 +40,10 @@ const App: React.FC = () => {
             <Route path="/newEssay" element={<NewEssayPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/drafts" element={<DraftsPage />} />
+            <Route path="/drafts" element={<DraftsPage />} />
+            <Route path="/testmodel" element={<TestModel />} />
+            <Route path="/train" element={<TrainPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             
           </Routes>
         </Grid>
