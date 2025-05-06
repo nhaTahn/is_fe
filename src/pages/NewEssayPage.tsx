@@ -59,15 +59,37 @@ const EssayPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', height: '90vh', borderLeftStyle: 'solid', borderTopStyle: 'solid', borderWidth: '2px' }}>
+    <Box sx={{
+      display: 'flex', 
+      flexDirection: 'row', 
+      height: '100%', 
+      borderLeftStyle: 'solid', 
+      borderTopStyle: 'solid', 
+      borderWidth: '2px', 
+      maxWidth: '100%'
+      }}>
       {/* Main Content */}
-       <Box sx={{ flexGrow: 2, padding: '5%', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: '10px' }}>
+      <Box sx={{
+        flexGrow: 1,
+        padding: '20px',
+        backgroundColor: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingBottom: '10px',
+        maxWidth: '100%'
+      }}>
         
         {/* Essay Prompt */}
-        <Grid container spacing={0}>
+        <Grid container spacing={5}>
           <Grid size={11}>    
-            <Box className="frame">
-              <Typography variant="h6" sx={{ display: "flex", textAlign: 'justify', marginBottom: '16px' }}>
+            <Box sx={{
+                width: "100%",
+                padding: '10px',
+                border: "1px solid black",
+                borderRadius: 1,
+              }}>
+              <Typography sx={{ display: "flex", textAlign: 'justify', marginBottom: '8px' }}>
                 Some people think that a huge amount of time and money is spent on the protection of wild animals,
                 and that this money could be better spent on the human population. To what extent do you agree or disagree
                 with this opinion?
@@ -75,30 +97,39 @@ const EssayPage: React.FC = () => {
             </Box>
           </Grid>
           <Grid size={1}>
-              <Refresh sx={{ marginLeft: "110%", cursor: "pointer",}} onClick={handleRefresh}/>
+            <Refresh sx={{ cursor: "pointer" }} onClick={handleRefresh} />
           </Grid>
         </Grid>
 
         <Timer time={time} />
 
+        {/* Essay Input Area */}
         <EssayInput essay={essay} onChange={handleEssayChange} />
+
         {/* Word count */}
         <WordCount count={wordCount} />
 
         {/* Submit Button */}
-       
-        <Button className='button-submit-essay' variant="contained" color="success" onClick={handleClickOpen} sx={{ 
+        <Button 
+          className='button-submit-essay' 
+          variant="contained" 
+          color="success" 
+          onClick={handleClickOpen} 
+          sx={{ 
             background: "var(--colors-green, #34c759)",
             borderRadius: "100px",
             width: "250px",
             gap: "8px",
-            height: "57px"
-           }}>
+            height: "57px",
+            marginTop: '16px'
+          }}
+        >
           Submit
         </Button>
       </Box>
-        <ConfirmDialog open={open} onClose={handleClose} onSubmit={handleSubmit} />
-        <SuccessDialog open={confirm} onClose={handleConfirmClose} onNavigate={handleNavigate} />
+
+      <ConfirmDialog open={open} onClose={handleClose} onSubmit={handleSubmit} />
+      <SuccessDialog open={confirm} onClose={handleConfirmClose} onNavigate={handleNavigate} />
     </Box>
   );
 };

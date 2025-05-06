@@ -9,11 +9,11 @@ const WordCount: React.FC<WordCountProps> = ({ count }) => {
   console.log(count)
   return (
     <Box sx={{ 
-      width: "1350px",
+      width: '100%',
       marginBottom: "2%",
-      borderStyle: "solid",
-      borderWidth: "1px",
-      padding: "1%"
+      // borderStyle: "solid",
+      // borderWidth: "1px",
+      // padding: "1%"
     }}>
       <Typography variant="body2" color="textSecondary">
         {count} word{count > 1 && 's'}

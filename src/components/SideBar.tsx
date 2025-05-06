@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
       sx={{
         width: "100%",
         backgroundColor: "#fff",
-        padding: "16px",
+        padding: "8px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
@@ -34,6 +34,7 @@ const Sidebar: React.FC = () => {
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
+          width: "100%",
           ...isActive("/newEssay"), // Highlight if active
         }}
       >
@@ -48,6 +49,7 @@ const Sidebar: React.FC = () => {
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
+          width: "100%",
           ...isActive("/drafts"), // Highlight if active
         }}
       >
@@ -62,6 +64,7 @@ const Sidebar: React.FC = () => {
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
+          width: "100%",
           ...isActive("/history"), // Highlight if active
         }}
       >
@@ -77,6 +80,7 @@ const Sidebar: React.FC = () => {
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
+          width: "100%",
           ...isActive("/testmodel"), // Highlight if active
         }}
       >
@@ -92,6 +96,7 @@ const Sidebar: React.FC = () => {
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
+          width: "100%",
           ...isActive("/train"), // Highlight if active
         }}
       >
@@ -106,6 +111,7 @@ const Sidebar: React.FC = () => {
           marginBottom: "16px",
           borderRadius: "5px",
           padding: "10px",
+          width: "100%",
           ...isActive("/dashboard"), // Highlight if active
         }}
       >

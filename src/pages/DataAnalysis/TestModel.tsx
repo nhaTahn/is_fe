@@ -67,45 +67,44 @@ const TestModel: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        height: '90vh',
-        borderLeft: '2px solid #ccc',
-        borderTop: '2px solid #ccc',
-      }}
-    >
-      {/* Main Content */}
-      <Box
-        sx={{
-          flexGrow: 2,
-          p: '5%',
-          backgroundColor: '#fff',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          position: 'relative',         // ← allow inner absolute positioning if needed
-        }}
-      >
+    <Box sx={{
+          display: 'flex', 
+          flexDirection: 'row', 
+          height: '100%', 
+          borderLeftStyle: 'solid', 
+          borderTopStyle: 'solid', 
+          borderWidth: '2px', 
+          maxWidth: '100%'
+          }}>
+          {/* Main Content */}
+          <Box sx={{
+            flexGrow: 1,
+            padding: '20px',
+            backgroundColor: '#fff',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            paddingBottom: '10px',
+            maxWidth: '100%'
+          }}>
         {/* Prompt & Refresh */}
-        <Grid container spacing={0} >
-          <Grid size={11}>
-            <Box className="frame">
-              <Typography
-                variant="h6"
-                sx={{ textAlign: 'justify', mb: 2 }}
-              >
+        <Grid container spacing={5}>
+          <Grid size={11}>    
+            <Box sx={{
+                width: "100%",
+                padding: '10px',
+                border: "1px solid black",
+                borderRadius: 1,
+              }}>
+              <Typography sx={{ display: "flex", textAlign: 'justify', marginBottom: '8px' }}>
                 Some people think that a huge amount of time and money is spent on the protection of wild animals,
-                and that this money could be better spent on the human population. To what extent do you agree or disagree?
+                and that this money could be better spent on the human population. To what extent do you agree or disagree
+                with this opinion?
               </Typography>
             </Box>
           </Grid>
           <Grid size={1}>
-            <Refresh
-              sx={{ cursor: 'pointer',marginLeft: "110%" }}
-              onClick={handleRefresh}
-            />
+            <Refresh sx={{ cursor: "pointer" }} onClick={handleRefresh} />
           </Grid>
         </Grid>
 
