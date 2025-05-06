@@ -7,6 +7,7 @@ import Timer from '../components/Utils/Timer';
 import '../styles/NewEssay.css';
 import EssayInput from '../components/Utils/EssayInput'
 import WordCount from '../components/Utils/WordCount'
+import { getRandomPrompt } from '../apis/prompt/promptApi';
 
 const EssayPage: React.FC = () => {
   const [time, setTime] = useState(0); // Time in seconds
@@ -14,6 +15,7 @@ const EssayPage: React.FC = () => {
   const [wordCount, setWordCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [prompt, setPrompt] = useState<string>('');
 
   const handleClickOpen = () => {
     setOpen(true); 
@@ -49,6 +51,21 @@ const EssayPage: React.FC = () => {
     setWordCount(essay.split(/\s+/).filter(Boolean).length);
   }, [essay]);
 
+  useEffect(() => {
+    const fetchPrompt = async () => {
+      try {
+        const response = await getRandomPrompt();
+        // console.log(response)
+        setPrompt(response?.data?.prompt || 'No prompt available'); // Adjust based on actual response structure
+      } catch (error) {
+        console.error('Failed to fetch prompt:', error);
+        setPrompt('Unable to load prompt.');
+      }
+    };
+
+    fetchPrompt();
+  }, []);
+
   const handleEssayChange = (value: string) => {
     setEssay(value);
   };
@@ -75,7 +92,7 @@ const EssayPage: React.FC = () => {
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        // alignItems: 'center',
         paddingBottom: '10px',
         maxWidth: '100%'
       }}>
@@ -89,10 +106,8 @@ const EssayPage: React.FC = () => {
                 border: "1px solid black",
                 borderRadius: 1,
               }}>
-              <Typography sx={{ display: "flex", textAlign: 'justify', marginBottom: '8px' }}>
-                Some people think that a huge amount of time and money is spent on the protection of wild animals,
-                and that this money could be better spent on the human population. To what extent do you agree or disagree
-                with this opinion?
+              <Typography sx={{ display: "flex", textAlign: 'left', marginBottom: '8px' }}>
+                {prompt}
               </Typography>
             </Box>
           </Grid>
@@ -110,22 +125,24 @@ const EssayPage: React.FC = () => {
         <WordCount count={wordCount} />
 
         {/* Submit Button */}
-        <Button 
-          className='button-submit-essay' 
-          variant="contained" 
-          color="success" 
-          onClick={handleClickOpen} 
-          sx={{ 
-            background: "var(--colors-green, #34c759)",
-            borderRadius: "100px",
-            width: "250px",
-            gap: "8px",
-            height: "57px",
-            marginTop: '16px'
-          }}
-        >
-          Submit
-        </Button>
+        <Box sx={{ alignSelf: 'center', marginTop: '16px' }}>
+          <Button 
+            className='button-submit-essay' 
+            variant="contained" 
+            color="success" 
+            onClick={handleClickOpen} 
+            sx={{ 
+              background: "var(--colors-green, #34c759)",
+              borderRadius: "100px",
+              width: "250px",
+              gap: "8px",
+              height: "57px"
+            }}
+          >
+            Submit
+          </Button>
+        </Box>
+
       </Box>
 
       <ConfirmDialog open={open} onClose={handleClose} onSubmit={handleSubmit} />
