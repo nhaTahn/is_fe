@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 import { Button } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -39,6 +41,7 @@ const SignupPage: React.FC = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
             />
           </div>
           <div className="input-group">
@@ -49,49 +52,82 @@ const SignupPage: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
             />
           </div>
           <div className="input-group">
             <label>Password</label>
-            <div className="password-container">
+            <div style={{ display: "flex", position: "relative", width: "100%" }}>
               <input
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  paddingRight: "40px", // Space for the icon
+                  marginBottom: "10px",
+                }}
               />
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility("password")}
-                className="password-toggle"
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  top: "20%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  maxWidth: "30px",
+                  zIndex: 0, // Ensure the icon is clickable above the input
+                }}
               >
-                👁️
+                {passwordVisible ? <VisibilityOff /> : <Visibility />}
               </button>
             </div>
           </div>
           <div className="input-group">
             <label>Confirm Password</label>
-            <div className="password-container">
+            <div style={{ display: "flex", position: "relative", width: "100%" }}>
               <input
                 type={confirmPasswordVisible ? "text" : "password"}
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  paddingRight: "40px", // Space for the icon
+                  marginBottom: "10px",
+                }}
               />
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility("confirmPassword")}
-                className="password-toggle"
+                style={{
+                  position: "absolute",
+                  right: "20px",
+                  top: "20%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  maxWidth: "30px",
+                  zIndex: 0, // Ensure the icon is clickable above the input
+                }}
               >
-                👁️
+                {confirmPasswordVisible ? <VisibilityOff /> : <Visibility />}
               </button>
             </div>
           </div>
-          <Button type="submit" variant="contained">Sign up</Button>
+          <Button type="submit" variant="contained" sx={{ width: "100%", padding: "10px", fontSize: "16px" }}>Sign up</Button>
         </form>
-        <Button href="/signin" variant="text"> Sign in</Button>
+        <Button href="/signin" variant="text" sx={{ marginTop: "10px" }}>Sign in</Button>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Box, Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Logo from '../assets/IeltSLogo.png'; // Import the logo image
+import Logo from '../assets/logo.png'; // Import the logo image
 import { useNavigate } from 'react-router-dom'; 
 
 const HeaderComponents: React.FC = () => {
