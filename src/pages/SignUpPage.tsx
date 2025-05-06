@@ -3,21 +3,34 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { signup } from "../apis/auth/authApi";
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [username, setUserName] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState<boolean>(false);
   const navigate = useNavigate(); 
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle the form submission (e.g., validation and sign-up logic)
-    console.log("Submitted:", { name, email, password, confirmPassword });
-    navigate('/newEssay');
+    if (password !== confirmPassword) {
+      console.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      // Call the signup API function
+      const response = await signup(name, email, password, username);
+      console.log("Signup successful:", response);
+
+      navigate("/signin");
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
   };
 
   const togglePasswordVisibility = (field: string) => {
@@ -40,6 +53,17 @@ const SignupPage: React.FC = () => {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
+              style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+            />
+          </div>
+          <div className="input-group">
+            <label>Username</label>
+            <input
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
               required
               style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
             />

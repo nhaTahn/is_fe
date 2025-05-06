@@ -5,11 +5,11 @@ import Logo from '../assets/logo.png'; // Import the logo image
 import { useNavigate } from 'react-router-dom'; 
 
 const HeaderComponents: React.FC = () => {
-  const userName = sessionStorage.getItem("user");
+  const token = localStorage.getItem("auth_token");
   const navigate = useNavigate(); // Initialize the navigate function
 
   const logOut = () => {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("auth_token");
     navigate('/signin')
   }
   
@@ -23,14 +23,14 @@ const HeaderComponents: React.FC = () => {
             width: 'auto', 
             borderStyle: 'none',
             marginLeft: '25%'}} />
-          <div>{userName}</div>
+          {/* <div>{userName}</div> */}
         </Box>
 
-        {userName ?
+        {token ?
           <Box  sx={{ display: 'flex', justifyContent: 'flex-end', }}>
-            <Typography variant="body1" sx={{ color: "black", paddingRight: "20px" }}>
+            {/* <Typography variant="body1" sx={{ color: "black", paddingRight: "20px" }}>
                 Hello, {userName} 
-            </Typography>
+            </Typography> */}
             <LogoutIcon onClick={logOut}  sx={{ color: 'black' }}/>
           </Box> 
           : null  } 
