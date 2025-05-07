@@ -1,17 +1,13 @@
 import React from 'react';
 import { Dialog, DialogActions, DialogTitle, Button, Box, Typography, IconButton } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
+import { EssayDto } from '../dtos/EssayDto';
 
 interface EssayDetailDialogProps {
   open: boolean;
   onClose: () => void;
   onRetake: () => void;
-  essayDetails: {
-    title: string;
-    band: string;
-    paragraph1: string;
-    paragraph2: string;
-  } | null; // Allow null as a type
+  essayDetails: EssayDto;
 }
 
 const EssayDetailDialog: React.FC<EssayDetailDialogProps> = ({ open, onClose, onRetake, essayDetails }) => {
@@ -49,8 +45,8 @@ const EssayDetailDialog: React.FC<EssayDetailDialogProps> = ({ open, onClose, on
           onClick={onClose}
           sx={{
             position: 'absolute',
-            right: '5%',
-            top: '7%',
+            right: '2%',
+            top: '2%',
             color: "#000",
             height: '15px',
             width: '15px',
@@ -64,9 +60,9 @@ const EssayDetailDialog: React.FC<EssayDetailDialogProps> = ({ open, onClose, on
         <Typography variant="h6" sx={{
           fontWeight: 600,
           color: "#000",
-          fontSize: '24px',
+          fontSize: '18px',
         }}>
-          Band: {essayDetails.band}
+          Question: {essayDetails.prompt}
         </Typography>
 
         {/* Essay Paragraphs */}
@@ -78,7 +74,7 @@ const EssayDetailDialog: React.FC<EssayDetailDialogProps> = ({ open, onClose, on
           textAlign: "justify",
           whiteSpace: "pre-line", // Maintain line breaks
         }}>
-          Essay: {essayDetails.paragraph1}
+          Essay: 
         </Typography>
         <Typography variant="body1" sx={{
           color: "#000",
@@ -88,7 +84,7 @@ const EssayDetailDialog: React.FC<EssayDetailDialogProps> = ({ open, onClose, on
           textAlign: "justify",
           whiteSpace: "pre-line", // Maintain line breaks
         }}>
-          {essayDetails.paragraph2}
+          {essayDetails.content}
         </Typography>
 
         {/* Action Buttons */}
@@ -118,7 +114,7 @@ const EssayDetailDialog: React.FC<EssayDetailDialogProps> = ({ open, onClose, on
               }
             }}
           >
-            Retake
+            Continue
           </Button>
           <Button
             variant="contained"

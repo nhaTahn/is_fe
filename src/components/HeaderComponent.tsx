@@ -10,6 +10,7 @@ const HeaderComponents: React.FC = () => {
 
   const logOut = () => {
     localStorage.removeItem("auth_token");
+    localStorage.removeItem('isDA');
     navigate('/signin')
   }
   

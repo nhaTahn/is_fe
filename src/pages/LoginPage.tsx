@@ -10,21 +10,6 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  // const [userName, setUserName] = useState<string | null>(null); // User session state
-
-  // useEffect(() => {
-  //   const storedUserName = sessionStorage.getItem("user");
-  //   setUserName(storedUserName); // Set the username state
-  // }, []); // Empty dependency array means this will run once when the component mounts
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   // Handle the form submission
-  //   console.log("Submitted:", { email, password });
-
-  //   sessionStorage.setItem("user", "Nguyen Van A"); 
-  //   navigate('/newEssay');
-  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +22,17 @@ const LoginPage: React.FC = () => {
       if (token) {
         // Store token in localStorage
         localStorage.setItem('auth_token', token);
-        navigate('/newEssay');
+
+        if (username.toLowerCase() === 'dataanalysist') {
+          localStorage.setItem('isDA', 'true');
+          navigate('/testmodel');
+
+        } else {
+          localStorage.removeItem('isDA');
+          navigate('/newEssay');
+        }
+
+        
       } else {
         console.error('Token not found in the response');
       }

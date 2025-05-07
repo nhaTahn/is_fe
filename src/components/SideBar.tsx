@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { Link, useLocation } from "react-router-dom"; // For navigation
 
 const Sidebar: React.FC = () => {
   const location = useLocation(); // Get the current URL location
+  const [isDA, setIsDA] = useState(false);
+
+  useEffect(() => {
+    const daFlag = localStorage.getItem("isDA");
+    setIsDA(daFlag === "true"); // or any truthy check depending on how you store it
+  }, []);
   
   // Helper function to determine if the link is active
   const isActive = (path: string) => {
@@ -23,100 +29,64 @@ const Sidebar: React.FC = () => {
         borderTopStyle: "solid",
         borderWidth: "2px",
         alignItems: "flex-start",
-        paddingTop: "20px", // Adjusted padding to bring buttons closer to the top
+        paddingTop: "20px",
       }}
     >
-       <Button
-        component={Link}
-        to="/newEssay"
-        variant="text"
-        sx={{
-          marginBottom: "16px",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-          ...isActive("/newEssay"), // Highlight if active
-        }}
-      >
-        New Essay
-      </Button>
-
-      <Button
-        component={Link}
-        to="/drafts"
-        variant="text"
-        sx={{
-          marginBottom: "16px",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-          ...isActive("/drafts"), // Highlight if active
-        }}
-      >
-        Drafts
-      </Button>
-
-       <Button
-        component={Link}
-        to="/history"
-        variant="text"
-        sx={{
-          marginBottom: "16px",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-          ...isActive("/history"), // Highlight if active
-        }}
-      >
-        History
-      </Button>
-
-
-      <Button
-        component={Link}
-        to="/testmodel"
-        variant="text"
-        sx={{
-          marginBottom: "16px",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-          ...isActive("/testmodel"), // Highlight if active
-        }}
-      >
-        Test Models
-      </Button>
-
-
-      <Button
-        component={Link}
-        to="/train"
-        variant="text"
-        sx={{
-          marginBottom: "16px",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-          ...isActive("/train"), // Highlight if active
-        }}
-      >
-        Train
-      </Button>
-
-      <Button
-        component={Link}
-        to="/dashboard"
-        variant="text"
-        sx={{
-          marginBottom: "16px",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-          ...isActive("/dashboard"), // Highlight if active
-        }}
-      >
-        Dashboard
-      </Button>
+      {!isDA ? (
+        <>
+          <Button
+            component={Link}
+            to="/newEssay"
+            variant="text"
+            sx={{ mb: 2, borderRadius: "5px", p: "10px", width: "100%", ...isActive("/newEssay") }}
+          >
+            New Essay
+          </Button>
+          <Button
+            component={Link}
+            to="/drafts"
+            variant="text"
+            sx={{ mb: 2, borderRadius: "5px", p: "10px", width: "100%", ...isActive("/drafts") }}
+          >
+            Drafts
+          </Button>
+          <Button
+            component={Link}
+            to="/history"
+            variant="text"
+            sx={{ mb: 2, borderRadius: "5px", p: "10px", width: "100%", ...isActive("/history") }}
+          >
+            History
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button
+            component={Link}
+            to="/testmodel"
+            variant="text"
+            sx={{ mb: 2, borderRadius: "5px", p: "10px", width: "100%", ...isActive("/testmodel") }}
+          >
+            Test Models
+          </Button>
+          <Button
+            component={Link}
+            to="/train"
+            variant="text"
+            sx={{ mb: 2, borderRadius: "5px", p: "10px", width: "100%", ...isActive("/train") }}
+          >
+            Train
+          </Button>
+          <Button
+            component={Link}
+            to="/dashboard"
+            variant="text"
+            sx={{ mb: 2, borderRadius: "5px", p: "10px", width: "100%", ...isActive("/dashboard") }}
+          >
+            Dashboard
+          </Button>
+        </>
+      )}
     </Box>
   );
 };

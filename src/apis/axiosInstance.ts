@@ -28,8 +28,7 @@ apiInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Handle unauthorized error (e.g., redirect to login)
-      // For example: window.location.href = '/login';
+
       window.location.href = '/signin';
     }
     return Promise.reject(error);

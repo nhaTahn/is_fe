@@ -1,43 +1,68 @@
-import React, { useState } from 'react';
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EssayDetailDialog from '../../components/EssayDetailDialog'
+import { EssayDto } from '../../dtos/EssayDto';
+import { getEssayDrafts } from '../../apis/essay/essayApi';
 
 const DraftsPage: React.FC = () => {
   // Example data for the drafts
-  const drafts = [
-    {
-      title: 'The increase in the production of consumer goods results in damage to the natural environment...',
-      id: 1,
-      band: 'draft'
-    },
-    {
-      title: 'As well as making money, businesses also have social responsibilities...',
-      id: 2,
-    },
-    // Add more drafts as needed
-  ];
+  // const drafts = [
+  //   {
+  //     title: 'The increase in the production of consumer goods results in damage to the natural environment...',
+  //     id: 1,
+  //     band: 'draft'
+  //   },
+  //   {
+  //     title: 'As well as making money, businesses also have social responsibilities...',
+  //     id: 2,
+  //   },
 
-  const handleClick = (draft: any) => {
+  // ];
+
+  const [drafts, setDrafts] = useState<EssayDto[]>([]);
+  const [openDetailDialog, setOpenDetailDialog] = useState(false);
+  const [selectedEssay, setSelectedEssay] = useState<EssayDto>({
+        id: '',
+        promptId: '',
+        prompt: '',
+        content: '',
+        band: 0,
+        timeTaken: 0,
+        updatedAt: '',
+        status: ''
+  });
+  
+
+  useEffect(() => {
+    const fetchDrafts = async () => {
+      try {
+        const data = await getEssayDrafts();
+        setDrafts(data);
+      } catch (err: any) {
+        console.error('Error fetching drafts:', err);
+        // setError('Failed to load drafts.');
+      }
+    };
+
+    fetchDrafts();
+  }, []);
+
+  const handleClick = (draft: EssayDto) => {
     // Logic to open the essay in detail, similar to viewing/editing
     setSelectedEssay(draft);
     setOpenDetailDialog(true);
   };
 
-  const [openDetailDialog, setOpenDetailDialog] = useState(false);
-  const [selectedEssay, setSelectedEssay] = useState<any>(null);
 
-  // Function to open the dialog with essay details
-//   const handleRowClick = (essay: any) => {
-//     setSelectedEssay(essay);
-//     setOpenDetailDialog(true);
-//   };
 
   // Function to close the dialog
   const handleCloseDetailDialog = () => {
     setOpenDetailDialog(false);
   };
+
+  
 
 
   return (
@@ -60,21 +85,40 @@ const DraftsPage: React.FC = () => {
             </TableHead>
             <TableBody>
               {drafts.map((draft, index) => (
-                <TableRow key={index} >
-                  <TableCell component="th" scope="row" >{draft.title}</TableCell>
-                  <TableCell align="center" sx={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
-                    <Button onClick={() => handleClick(draft)} sx={{ marginRight: '10px', display: 'flex', alignItems: 'center', color: '#000', width: '20px'}}>
-                      <VisibilityIcon sx={{ marginRight: '4px', height: '32px', width: '32px' }} />
-                    
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        noWrap
+                        sx={{ maxWidth: 900 }}
+                      >
+                        {draft.prompt}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        noWrap
+                        sx={{ maxWidth: 900 }}
+                      >
+                        {draft.content}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+
+                  <TableCell align="center" sx={{ display: 'flex', justifyContent: 'right', gap: '8px' }}>
+                    <Button onClick={() => handleClick(draft)} sx={{ color: '#000', maxWidth: '50px', padding: 0 }}>
+                      <VisibilityIcon sx={{ height: '50px', width: '32px' }} />
                     </Button>
-                    <Button onClick={() => handleClick(draft)} sx={{ display: 'flex', alignItems: 'center', color: '#000', width: '20px'}}>
-                      <EditIcon sx={{ marginRight: '4px' , height: '32px', width: '32px'}} />
-                     
+                    <Button onClick={() => handleClick(draft)} sx={{ color: '#000', maxWidth: '50px', padding: 0 }}>
+                      <EditIcon sx={{ height: '50px', width: '32px' }} />
                     </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
+
           </Table>
         </TableContainer>
 

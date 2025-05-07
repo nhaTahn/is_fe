@@ -75,8 +75,9 @@ const Dashboard: React.FC = () => {
         justifyContent: 'center',
         // p: 4,
         backgroundColor: '#f0f2f5',
-        borderLeft: '2px solid #ccc',
-        borderTop: '2px solid #ccc',
+        borderLeft: '2px solid black',
+        borderTop: '2px solid black',
+        
         height: '90vh',
       }}
     >
