@@ -1,4 +1,5 @@
 import apiInstance from '../axiosInstance';
+import { PromptDto } from '../../dtos/QuestionDto';
 
 const API_URL = '/prompts';
 
@@ -13,10 +14,10 @@ export const createPrompt = async (promptData: { text: string }) => {
 };
 
 // 2. Get a random prompt
-export const getRandomPrompt = async () => {
+export const getRandomPrompt = async (): Promise<PromptDto> => {
   try {
-    const response = await apiInstance.get(`${API_URL}/random`);
-    return response.data;
+    const response = await apiInstance.get<{data: PromptDto}>(`${API_URL}/random`);
+    return response.data.data;
   } catch (error) {
     // throw new Error(error.response?.data?.message || 'Failed to fetch random prompt');
     throw error;

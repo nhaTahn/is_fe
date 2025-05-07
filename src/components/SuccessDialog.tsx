@@ -67,14 +67,14 @@ const SuccessDialog: React.FC<SuccessDialogProps> = ({ open, onClose, onNavigate
             }}>
               Your answer has been submitted!
             </Typography>
-            <Typography sx={{
+            {/* <Typography sx={{
               color: "#000000",
               fontFamily: "Inter-SemiBold",
               fontSize: "20px",
               fontWeight: 400,
             }}>
               Your score will be notified via email!
-            </Typography>
+            </Typography> */}
           </Box>
         </Box>
 

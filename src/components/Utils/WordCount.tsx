@@ -10,7 +10,7 @@ const WordCount: React.FC<WordCountProps> = ({ count }) => {
   return (
     <Box sx={{ 
       width: '100%',
-      marginBottom: "2%",
+      marginBottom: "10px",
       // borderStyle: "solid",
       // borderWidth: "1px",
       // padding: "1%"

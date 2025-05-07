@@ -1,26 +1,54 @@
 import apiInstance from '../axiosInstance'; // Import the configured Axios instance
+import { EssayDto } from '../../dtos/EssayDto';
 
-const API_URL = '/auth'; // Your auth API endpoint
+const API_URL = '/essay'; // Your auth API endpoint
 
-// Login API call
-export const signin = async (email: string, password: string) => {
-  try {
-    const response = await apiInstance.post(`${API_URL}/signin`, { email, password });
-    return response.data;
-  } catch (error) {
-    // throw new Error(error.response?.data?.message || 'Something went wrong');
+export const getEssayDrafts = async (): Promise<EssayDto[]> => {
+    try {
+      const response = await apiInstance.get<{ data: EssayDto[] }>(`${API_URL}/drafts`);
+      return response.data.data;
+    } catch (error: any) {
+    //   console.error('Failed to fetch drafts:', error.response?.data || error.message);
+      throw error;
+    }
+  };
+  
+
+export const getEssayHistory = async (): Promise<EssayDto[]> => {
+try {
+    const response = await apiInstance.get<{ data: EssayDto[] }>(`${API_URL}/history`);
+    return response.data.data;
+} catch (error: any) {
+//   console.error('Failed to fetch history:', error.response?.data || error.message);
     throw error;
-  }
+}
 };
 
-// Signup API call
-export const signup = async (name: string, email: string, password: string) => {
-  try {
-    const username = 'is242';
-    const response = await apiInstance.post(`${API_URL}/signup`, { name, email, password, username });
-    return response.data;
-  } catch (error) {
-    // throw new Error(error.response?.data?.message || 'Something went wrong');
-    throw error;
-  }
-};
+export const saveEssayDraft = async (payload: {
+    content: string;
+    id: string;
+    timeTaken: number;
+  }): Promise<string> => {
+    try {
+      const response = await apiInstance.put<{ message: string }>(`${API_URL}/draft`, payload);
+      return response.data.message;
+    } catch (error: any) {
+    //   console.error('Failed to save draft:', error.response?.data || error.message);
+      throw error;
+    }
+  };
+
+export const submitEssay = async (payload: {
+    content: string;
+    promptId: string;
+    timeTaken: number;
+    status: string;
+  }): Promise<string> => {
+    try {
+      const response = await apiInstance.post<{ message: string }>(`${API_URL}/submit`, payload);
+      return response.data.message;
+    } catch (error: any) {
+    //   console.error('Failed to submit essay:', error.response?.data || error.message);
+      throw error;
+    }
+  };

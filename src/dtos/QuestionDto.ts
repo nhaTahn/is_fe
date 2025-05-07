@@ -1,3 +1,4 @@
-export interface QuestionDto {
-    content: string;
+export interface PromptDto {
+    id: string;
+    prompt: string;
 }

@@ -8,6 +8,9 @@ import '../styles/NewEssay.css';
 import EssayInput from '../components/Utils/EssayInput'
 import WordCount from '../components/Utils/WordCount'
 import { getRandomPrompt } from '../apis/prompt/promptApi';
+import SaveDraftDialog from '../components/SaveDraftDialog';
+import { PromptDto } from '../dtos/QuestionDto';
+import { submitEssay } from '../apis/essay/essayApi';
 
 const EssayPage: React.FC = () => {
   const [time, setTime] = useState(0); // Time in seconds
@@ -15,7 +18,14 @@ const EssayPage: React.FC = () => {
   const [wordCount, setWordCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const [prompt, setPrompt] = useState<string>('');
+  const [saveDraft, setSaveDraft] = useState(false);
+  // const [prompt, setPrompt] = useState<string>('');
+  const [currentPrompt, setCurrentPrompt] = useState<PromptDto>({
+    id: '',
+    prompt: ''
+  });
+  
+
 
   const handleClickOpen = () => {
     setOpen(true); 
@@ -24,6 +34,30 @@ const EssayPage: React.FC = () => {
   const handleClose = () => {
     setOpen(false); 
   };
+
+  const handleClickSaveDraft = () => {
+    setSaveDraft(true);
+  };
+
+  const handleCloseSaveDraft = () => {
+    setSaveDraft(false);
+  };
+
+  const handleSaveDraft = async () => {
+    try {
+      const message = await submitEssay({
+        content: essay,
+        promptId: currentPrompt.id,
+        timeTaken: time,
+        status: 'draft'
+      });
+      console.log('Draft created:', message);
+      // Optionally show a snackbar/toast
+    } catch (err) {
+      console.error('Error saving draft:', err);
+    }
+  };
+  
 
   const handleConfirmClose = () => {
     setConfirm(false); 
@@ -55,14 +89,13 @@ const EssayPage: React.FC = () => {
     const fetchPrompt = async () => {
       try {
         const response = await getRandomPrompt();
-        // console.log(response)
-        setPrompt(response?.data?.prompt || 'No prompt available'); // Adjust based on actual response structure
+        setCurrentPrompt(response);
       } catch (error) {
         console.error('Failed to fetch prompt:', error);
-        setPrompt('Unable to load prompt.');
+        setCurrentPrompt({ id: '', prompt: 'Unable to load prompt.' });
       }
     };
-
+  
     fetchPrompt();
   }, []);
 
@@ -107,7 +140,7 @@ const EssayPage: React.FC = () => {
                 borderRadius: 1,
               }}>
               <Typography sx={{ display: "flex", textAlign: 'left', marginBottom: '8px' }}>
-                {prompt}
+                {currentPrompt.prompt}
               </Typography>
             </Box>
           </Grid>
@@ -134,17 +167,33 @@ const EssayPage: React.FC = () => {
             sx={{ 
               background: "var(--colors-green, #34c759)",
               borderRadius: "100px",
-              width: "250px",
+              width: "200px",
               gap: "8px",
               height: "57px"
             }}
           >
             Submit
           </Button>
+          <Button 
+            className='button-submit-essay' 
+            variant="contained" 
+            color="warning" 
+            onClick={handleClickSaveDraft} 
+            sx={{ 
+              background: "orange",
+              borderRadius: "100px",
+              width: "200px",
+              gap: "8px",
+              height: "57px"
+            }}
+          >
+            Save Draft
+          </Button>
         </Box>
 
       </Box>
 
+      <SaveDraftDialog open={saveDraft} onClose={handleCloseSaveDraft} onSaveDraft={handleSaveDraft} />
       <ConfirmDialog open={open} onClose={handleClose} onSubmit={handleSubmit} />
       <SuccessDialog open={confirm} onClose={handleConfirmClose} onNavigate={handleNavigate} />
     </Box>
