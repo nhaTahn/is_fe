@@ -11,6 +11,7 @@ import { getRandomPrompt } from '../apis/prompt/promptApi';
 import SaveDraftDialog from '../components/SaveDraftDialog';
 import { PromptDto } from '../dtos/QuestionDto';
 import { submitEssay } from '../apis/essay/essayApi';
+import { predictBandScore } from '../apis/essay/essayApi';
 
 const EssayPage: React.FC = () => {
   const [time, setTime] = useState(0); // Time in seconds
@@ -20,12 +21,12 @@ const EssayPage: React.FC = () => {
   const [confirm, setConfirm] = useState(false);
   const [saveDraft, setSaveDraft] = useState(false);
   // const [prompt, setPrompt] = useState<string>('');
+  const [bandScore, setBand] = useState(0);
+
   const [currentPrompt, setCurrentPrompt] = useState<PromptDto>({
     id: '',
     prompt: ''
   });
-  
-
 
   const handleClickOpen = () => {
     setOpen(true); 
@@ -63,9 +64,21 @@ const EssayPage: React.FC = () => {
     setConfirm(false); 
   };
 
-  const handleSubmit = () => {
-    setConfirm(true);
-    handleClose();
+  const handleSubmit =  async () => {
+    try {
+      const response = await predictBandScore({
+        essay: essay,
+        prompt: currentPrompt.prompt
+      });
+
+      setBand(response);
+      setConfirm(true);
+      handleClose();
+    } catch (error) {
+      console.error('Error  draft:', error);
+    }
+
+    // console.log(bandScore);
   };
 
   const handleNavigate =() => {
@@ -106,6 +119,17 @@ const EssayPage: React.FC = () => {
   const handleRefresh = () => {
     setEssay(""); // Reset the essay input
     setTime(0); // Reset the timer
+    const fetchPrompt = async () => {
+      try {
+        const response = await getRandomPrompt();
+        setCurrentPrompt(response);
+      } catch (error) {
+        console.error('Failed to fetch prompt:', error);
+        setCurrentPrompt({ id: '', prompt: 'Unable to load prompt.' });
+      }
+    };
+  
+    fetchPrompt();
   };
 
   return (

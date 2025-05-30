@@ -92,7 +92,7 @@ const DraftsPage: React.FC = () => {
                         variant="subtitle1"
                         fontWeight="bold"
                         noWrap
-                        sx={{ maxWidth: 900 }}
+                        sx={{ maxWidth: 1000 }}
                       >
                         {draft.prompt}
                       </Typography>
@@ -100,7 +100,7 @@ const DraftsPage: React.FC = () => {
                         variant="body2"
                         color="textSecondary"
                         noWrap
-                        sx={{ maxWidth: 900 }}
+                        sx={{ maxWidth: 1000 }}
                       >
                         {draft.content}
                       </Typography>
@@ -108,9 +108,9 @@ const DraftsPage: React.FC = () => {
                   </TableCell>
 
                   <TableCell align="center" sx={{ display: 'flex', justifyContent: 'right', gap: '8px' }}>
-                    <Button onClick={() => handleClick(draft)} sx={{ color: '#000', maxWidth: '50px', padding: 0 }}>
+                    {/* <Button onClick={() => handleClick(draft)} sx={{ color: '#000', maxWidth: '50px', padding: 0 }}>
                       <VisibilityIcon sx={{ height: '50px', width: '32px' }} />
-                    </Button>
+                    </Button> */}
                     <Button onClick={() => handleClick(draft)} sx={{ color: '#000', maxWidth: '50px', padding: 0 }}>
                       <EditIcon sx={{ height: '50px', width: '32px' }} />
                     </Button>

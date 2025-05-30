@@ -2,6 +2,7 @@ import apiInstance from '../axiosInstance'; // Import the configured Axios insta
 import { EssayDto } from '../../dtos/EssayDto';
 
 const API_URL = '/essay'; // Your auth API endpoint
+const AI_API_URL = 'https://6344-34-135-240-46.ngrok-free.app'; //change this to public_url of ngrok
 
 export const getEssayDrafts = async (): Promise<EssayDto[]> => {
     try {
@@ -52,3 +53,16 @@ export const submitEssay = async (payload: {
       throw error;
     }
   };
+
+export const predictBandScore = async (payload: {
+  prompt: string;
+  essay: string;
+}): Promise<number> => {
+  try {
+    const response = await apiInstance.post<{predicted_band_score: number}>(`${AI_API_URL}/predict`, payload);
+    return response.data.predicted_band_score;
+  } catch (error: any) {
+    // Optional: you can add more detailed error handling here
+    throw error;
+  }
+};

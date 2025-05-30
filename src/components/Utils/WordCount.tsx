@@ -6,7 +6,7 @@ interface WordCountProps {
 }
 
 const WordCount: React.FC<WordCountProps> = ({ count }) => {
-  console.log(count)
+  
   return (
     <Box sx={{ 
       width: '100%',
