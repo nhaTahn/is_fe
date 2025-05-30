@@ -1,9 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import EssayDetailDialog from '../../components/EssayDetailDialog'
+import { getEssayHistory } from '../../apis/essay/essayApi';
+import { EssayDto } from '../../dtos/EssayDto';
+
+function formatDateTime(isoString: string): string {
+  const date = new Date(isoString);
+
+  // Get hours and minutes, convert to local time if needed
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+
+  // Get day, month (0-based), year
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // months are zero-indexed
+  const year = date.getFullYear();
+
+  return `${hours}:${minutes} - ${day}/${month}/${year}`;
+}
+
+function formatSecondsToMMSS(totalSeconds: number): string {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  // Pad with leading zeros if needed
+  const mm = minutes.toString().padStart(2, '0');
+  const ss = seconds.toString().padStart(2, '0');
+
+  return `${mm}:${ss}`;
+}
+
 
 const HistoryPage: React.FC = () => {
   // Example data for the essays
+  const [histories, setHistories] = useState<EssayDto[]>([])
+
   const essays = [
     {
       title: 'The increase in the production of consumer goods results in damage to the natural environment...',
@@ -43,6 +74,20 @@ const HistoryPage: React.FC = () => {
   const [openDetailDialog, setOpenDetailDialog] = useState(false);
   const [selectedEssay, setSelectedEssay] = useState<any>(null);
 
+  useEffect(() => {
+    const fetchDrafts = async () => {
+      try {
+        const data = await getEssayHistory();
+        setHistories(data);
+      } catch (err: any) {
+        console.error('Error fetching drafts:', err);
+        // setError('Failed to load drafts.');
+      }
+    };
+
+    fetchDrafts();
+  }, []);
+
   // Function to open the dialog with essay details
   const handleRowClick = (essay: any) => {
     setSelectedEssay(essay);
@@ -71,19 +116,19 @@ const HistoryPage: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {essays.map((essay, index) => (
+                {histories.map((essay, index) => (
                  <TableRow key={index}   onClick={() => handleRowClick(essay)}  sx={{ backgroundColor: index % 2 === 0 ? '#f4f4f4' : '#ffffff' }}>
                  <TableCell component="th" scope="row" sx={{ fontSize: '16px' }}>
-                   {essay.title}
+                   {essay.prompt}
                  </TableCell>
                  <TableCell align="right" sx={{ fontSize: '16px' }}>
                    {essay.band}
                  </TableCell>
                  <TableCell align="right" sx={{ fontSize: '16px' }}>
-                   {essay.time}
+                   {formatSecondsToMMSS(essay.timeTaken)}
                  </TableCell>
                  <TableCell align="right" sx={{ fontSize: '16px' }}>
-                   {essay.date}
+                   {formatDateTime(essay.updatedAt)}
                  </TableCell>
                </TableRow>
                 ))}

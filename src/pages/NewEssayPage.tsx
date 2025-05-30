@@ -21,7 +21,7 @@ const EssayPage: React.FC = () => {
   const [confirm, setConfirm] = useState(false);
   const [saveDraft, setSaveDraft] = useState(false);
   // const [prompt, setPrompt] = useState<string>('');
-  const [bandScore, setBand] = useState(0);
+  const [bandScore, setBand] = useState(0.0);
 
   const [currentPrompt, setCurrentPrompt] = useState<PromptDto>({
     id: '',
@@ -50,7 +50,8 @@ const EssayPage: React.FC = () => {
         content: essay,
         promptId: currentPrompt.id,
         timeTaken: time,
-        status: 'draft'
+        status: 'draft',
+        band: 0.0
       });
       console.log('Draft created:', message);
       // Optionally show a snackbar/toast
@@ -72,13 +73,24 @@ const EssayPage: React.FC = () => {
       });
 
       setBand(response);
+
+      const message = await submitEssay({
+        content: essay,
+        promptId: currentPrompt.id,
+        timeTaken: time,
+        status: 'grading',
+        band: response
+      });
+
+      console.log('Submit success');
+
       setConfirm(true);
       handleClose();
     } catch (error) {
       console.error('Error  draft:', error);
     }
 
-    // console.log(bandScore);
+    console.log(bandScore);
   };
 
   const handleNavigate =() => {

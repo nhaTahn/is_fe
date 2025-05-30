@@ -44,6 +44,7 @@ export const submitEssay = async (payload: {
     promptId: string;
     timeTaken: number;
     status: string;
+    band: number;
   }): Promise<string> => {
     try {
       const response = await apiInstance.post<{ message: string }>(`${API_URL}/submit`, payload);
