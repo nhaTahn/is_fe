@@ -1,13 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Typography, FormControl, Select, MenuItem } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ModelTrainingIcon from "@mui/icons-material/ModelTraining";
+import { uploadDataset } from "../../apis/train";
+import { io } from 'socket.io-client';
+import { AI_API_URL } from "../../apis/train";
+
+interface TrainingStatusData {
+  status: string;  
+}
 
 const TrainPage: React.FC = () => {
   const [model, setModel] = useState<string>("model-v1");
+  const [file, setFile] = useState<File | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>('idle');
+
+  useEffect(() => {
+    const socket = io(AI_API_URL, {
+      transports: ['websocket'],  // Ensure using WebSocket transport
+    });
+
+    // Listen for training_complete events
+    socket.on('training_complete', (data: TrainingStatusData) => {
+      setStatus(data.status);
+    });
+
+    return () => {
+      socket.disconnect();  // Clean up on component unmount
+    };
+  }, []);
 
   const handleModelChange = (event: any) => {
     setModel(event.target.value as string);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFile(file);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      setError('No file selected');
+      return;
+    }
+
+    try {
+      // Call the uploadDataset function and wait for the response
+      const responseMessage = await uploadDataset(file);
+      setMessage(responseMessage);
+      setError(null);
+    } catch (err: any) {
+      setError(err);
+      setMessage(null);
+    }
   };
 
   return (
@@ -65,7 +115,7 @@ const TrainPage: React.FC = () => {
             </FormControl>
           </Box>
 
-          <Button
+          {/* <Button
             variant="text"
             startIcon={<AddCircleOutlineIcon />}
             sx={{
@@ -75,19 +125,48 @@ const TrainPage: React.FC = () => {
             }}
           >
             Upload dataset
-          </Button>
+          </Button> */}
+          <div>
+            {/* Visible file input */}
+            <input
+              type="file"
+              id="file-input"
+              onChange={handleFileChange}  // Trigger handleFileChange when a file is selected
+            />
+            
+            {/* Button to trigger the file upload
+            {file && (
+              <button onClick={handleUpload}>
+                Start Training
+              </button>
+            )} */}
+
+            {/* Display messages */}
+            {message && <p style={{ color: 'green' }}>{message}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </div>
         </Box>
 
-        <Button className='button-submit-essay' variant="contained" color="success"  sx={{ 
+        
+        <Button
+          className="button-submit-essay"
+          variant="contained"
+          color="success"
+          sx={{
             background: "var(--colors-green, #34c759)",
             borderRadius: "100px",
             width: "250px",
             gap: "8px",
             height: "57px",
-            marginTop: "50%"
-           }}>
+            marginTop: "50%",
+          }}
+          onClick={handleUpload}  // Trigger the function to upload and train
+        >
           Train
         </Button>
+        <h3>Training Status: {status}</h3>
+        
+        {/* {status === 'complete' && <p>Model training is complete!</p>} */}
       </Box>
     </Box>
   );
